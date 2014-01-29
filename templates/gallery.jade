@@ -2,9 +2,10 @@
 body
   each item in items
     if item.type == 'image'
-      a(href="images/#{item.name}")
-        img(src="thumbnails/#{item.name}")
+      a(href="/images/#{item.path}")
+        img(src="/thumbnails/#{item.dir}/600/#{item.name}")
     if item.type == 'directory'
-      a(href="gallery/#{item.name}")
-        img(src="thumbnails/#{item.name}")
+      a(href="/gallery/#{item.name}")
+        img(src="/assets/folder.png")
+        h4 #{item.name}
     br
