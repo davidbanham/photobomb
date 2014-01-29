@@ -1,4 +1,5 @@
 mkdirp = require 'mkdirp'
+path = require 'path'
 gm = require 'gm'
 module.exports =
   delete: (filename, thumbdir, SIZES, cb) ->
@@ -8,15 +9,13 @@ module.exports =
            cb err if err?
 
   generate: (from, to, SIZES, cb) ->
-    console.log "Got thumb request", from, to
+    console.log from, to, SIZES
     mkdirp to, (err) ->
-      return console.log err if err?
+      throw err if err?
       filename = path.basename from
       for size in SIZES
         do (size) ->
           mkdirp path.join(to, size.toString()), (err) ->
-            console.log "acting for ", size
-            console.log path.join(to, size.toString(), filename)
             gm(from)
               .resize(size)
               .write path.join(to, size.toString(), filename), (err) ->
