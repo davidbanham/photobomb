@@ -5,9 +5,11 @@ findit = require 'findit'
 mkdirp = require 'mkdirp'
 http = require 'http'
 findit = require 'findit'
+templates = require './lib/templates.coffee'
 thumbnailer = require './lib/thumbnailer.coffee'
 watcher = require './lib/watcher.coffee'
 router = require './lib/router.coffee'
+lister = require './lib/lister.coffee'
 
 DIR = './web'
 THUMBDIR = './thumbs'
@@ -28,10 +30,16 @@ watcher.watch DIR
 watcher.on 'created', (file) ->
   console.log "Created: ", file
   fs.stat file, (err, stats) ->
-    watcher.watch file if stats.isDirectory()
+    watchDir file if stats.isDirectory()
   if EXTS.indexOf(path.extname(file)) > -1
     thumbnailer.generate file, path.dirname(path.join(THUMBDIR, path.relative(DIR, file))), SIZES, (err) ->
       console.log "thumbs generated", err
+      target_dir = path.dirname path.relative DIR, file
+      lister.build "./web/#{target_dir}", (err, list) ->
+        return console.error err if err?
+        templates 'gallery', {locals: items: list}, (err, content) ->
+          console.log err, content
+          fs.writeFileSync "./public/#{target_dir}.html", content
 
 watcher.on 'deleted', (file) ->
   console.log "Deleted: ", file
