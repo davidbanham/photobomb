@@ -30,6 +30,11 @@ mkdirp path.join(THUMBDIR, size.toString()) for size in SIZES
 #Also watch the top level dir
 watcher.watch DIR
 
+#Build index page
+lister.build DIR, (err, list) ->
+  templates 'gallery', {locals: items: list}, (err, content) ->
+    fs.writeFile "./public/index.html", content
+
 watcher.on 'created', (file) ->
   console.log "Created: ", file
   fs.stat file, (err, stats) ->
