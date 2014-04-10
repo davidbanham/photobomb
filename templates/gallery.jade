@@ -5,7 +5,7 @@ body
       a(href="images/#{item.path}")
         img(src="/thumbs/#{item.dir}/600/#{item.name}")
     if item.type == 'directory'
-      a(href="/#{item.name}")
+      a(href="/#{item.name}.html")
         img(src="/assets/folder.png")
         h4 #{item.name}
     br

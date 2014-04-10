@@ -7,7 +7,7 @@ module.exports =
     list = []
     fs.readdir parent, (err, files) ->
       queue = files.length
-      dir = (parent.split(path.sep).splice 2).join path.sep
+      dir = (parent.split(path.sep).splice 3).join path.sep
       for file in files
         do (file) ->
           fs.stat path.join(parent, file), (err, stats) ->
