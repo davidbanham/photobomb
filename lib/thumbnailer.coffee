@@ -9,7 +9,6 @@ module.exports =
            cb err if err?
 
   generate: (from, to, SIZES, cb) ->
-    console.log from, to, SIZES
     mkdirp to, (err) ->
       throw err if err?
       filename = path.basename from
@@ -19,6 +18,5 @@ module.exports =
             gm(from)
               .resize(size)
               .write path.join(to, size.toString(), filename), (err) ->
-                console.log "finished with ", null
                 return cb err if err?
                 cb null

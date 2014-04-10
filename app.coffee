@@ -21,8 +21,11 @@ EXTS = ['.jpg', '.jpeg']
 mkdirp path.join(THUMBDIR, size.toString()) for size in SIZES
 
 #Watch all subdirectories of the main dir
-(findit.find(path.resolve(DIR))).on 'directory', (dir, stat) ->
-  watcher.watch dir
+(findit.find(path.resolve(DIR)))
+  .on 'directory', (dir, stat) ->
+    watcher.watch dir
+  .on 'file', (file) ->
+    thumbnail_file file
 
 #Also watch the top level dir
 watcher.watch DIR
@@ -31,15 +34,17 @@ watcher.on 'created', (file) ->
   console.log "Created: ", file
   fs.stat file, (err, stats) ->
     watchDir file if stats.isDirectory()
-  if EXTS.indexOf(path.extname(file)) > -1
-    thumbnailer.generate file, path.dirname(path.join(THUMBDIR, path.relative(DIR, file))), SIZES, (err) ->
-      console.log "thumbs generated", err
-      target_dir = path.dirname path.relative DIR, file
-      lister.build "./web/#{target_dir}", (err, list) ->
-        return console.error err if err?
-        templates 'gallery', {locals: items: list}, (err, content) ->
-          console.log err, content
-          fs.writeFileSync "./public/#{target_dir}.html", content
+  thumbnail_file file if EXTS.indexOf(path.extname(file)) > -1
+
+thumbnail_file = (file) ->
+  console.log 'thumbnailing', file
+  thumbnailer.generate file, path.dirname(path.join(THUMBDIR, path.relative(DIR, file))), SIZES, (err) ->
+    console.log "thumbs generated", err
+    target_dir = path.dirname path.relative DIR, file
+    lister.build "./web/#{target_dir}", (err, list) ->
+      return console.error err if err?
+      templates 'gallery', {locals: items: list}, (err, content) ->
+        fs.writeFileSync "./public/#{target_dir}.html", content
 
 watcher.on 'deleted', (file) ->
   console.log "Deleted: ", file
