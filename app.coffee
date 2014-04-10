@@ -11,7 +11,7 @@ watcher = require './lib/watcher.coffee'
 router = require './lib/router.coffee'
 lister = require './lib/lister.coffee'
 
-DIR = './web'
+DIR = './public/images'
 THUMBDIR = './thumbs'
 THUMBDIR = path.resolve THUMBDIR
 DIR = path.resolve DIR
@@ -39,12 +39,11 @@ watcher.on 'created', (file) ->
 thumbnail_file = (file) ->
   console.log 'thumbnailing', file
   thumbnailer.generate file, path.dirname(path.join(THUMBDIR, path.relative(DIR, file))), SIZES, (err) ->
-    console.log "thumbs generated", err
     target_dir = path.dirname path.relative DIR, file
-    lister.build "./web/#{target_dir}", (err, list) ->
+    lister.build "./public/images/#{target_dir}", (err, list) ->
       return console.error err if err?
       templates 'gallery', {locals: items: list}, (err, content) ->
-        fs.writeFileSync "./public/#{target_dir}.html", content
+        fs.writeFile "./public/#{target_dir}.html", content
 
 watcher.on 'deleted', (file) ->
   console.log "Deleted: ", file

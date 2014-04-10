@@ -2,7 +2,7 @@
 body
   each item in items
     if item.type == 'image'
-      a(href="web/#{item.path}")
+      a(href="images/#{item.path}")
         img(src="/thumbs/#{item.dir}/600/#{item.name}")
     if item.type == 'directory'
       a(href="/#{item.name}")
