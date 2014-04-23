@@ -24,6 +24,7 @@ mkdirp path.join(THUMBDIR, size.toString()) for size in SIZES
 (findit.find(path.resolve(DIR)))
   .on 'directory', (dir, stat) ->
     watcher.watch dir
+  #Create a thumbnail for every file we find
   .on 'file', (file) ->
     thumbnail_file file
 
