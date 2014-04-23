@@ -20,20 +20,20 @@ describe 'lister', ->
         [
           {
             name: 'one.jpg'
-            dir: 'list_test'
-            path: 'list_test/one.jpg'
+            dir: ''
+            path: 'one.jpg'
             type: 'image'
           }
           {
             name: 'sub'
-            dir: 'list_test'
-            path: 'list_test/sub'
+            dir: ''
+            path: 'sub'
             type: 'directory'
           }
           {
             name: 'two.jpg'
-            dir: 'list_test'
-            path: 'list_test/two.jpg'
+            dir: ''
+            path: 'two.jpg'
             type: 'image'
           }
         ]
