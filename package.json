@@ -16,7 +16,9 @@
     "gm": "~1.9.1",
     "jade": "~0.31.1",
     "coffee-script": "~1.6.3",
-    "async": "~0.7.0"
+    "level": "~0.18.0",
+    "async": "~0.7.0",
+    "deep-equal": "~0.2.1"
   },
   "dev-dependencies": {
     "mocha": "~1.10.0"
