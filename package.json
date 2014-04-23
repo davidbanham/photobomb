@@ -15,7 +15,8 @@
     "findit": "~0.1.2",
     "gm": "~1.9.1",
     "jade": "~0.31.1",
-    "coffee-script": "~1.6.3"
+    "coffee-script": "~1.6.3",
+    "async": "~0.7.0"
   },
   "dev-dependencies": {
     "mocha": "~1.10.0"

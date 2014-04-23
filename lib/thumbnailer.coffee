@@ -1,6 +1,8 @@
 mkdirp = require 'mkdirp'
 path = require 'path'
 gm = require 'gm'
+async = require 'async'
+
 module.exports =
   delete: (filename, thumbdir, SIZES, cb) ->
     if path.extname(file) is '.jpg'
@@ -9,14 +11,25 @@ module.exports =
            cb err if err?
 
   generate: (from, to, SIZES, cb) ->
-    mkdirp to, (err) ->
-      throw err if err?
-      filename = path.basename from
-      for size in SIZES
-        do (size) ->
-          mkdirp path.join(to, size.toString()), (err) ->
-            gm(from)
-              .resize(size)
-              .write path.join(to, size.toString(), filename), (err) ->
-                return cb err if err?
-                cb null
+    filename = path.basename from
+    queue = async.queue @thumbnail, 1
+
+    for size in SIZES
+      queue.push {file: filename, size: size, to: to, from: from}, (err) ->
+        throw err if err?
+
+    queue.drain = ->
+      cb null
+
+  thumbnail: (input, cb) ->
+    file = input.file
+    size = input.size
+    to = input.to
+    from = input.from
+
+    mkdirp path.join(to, size.toString()), (err) ->
+      gm(from)
+        .resize(size)
+        .write path.join(to, size.toString(), file), (err) ->
+          return cb err if err?
+          cb null
