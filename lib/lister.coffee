@@ -22,3 +22,9 @@ module.exports =
               list.push info unless EXTS.indexOf(path.extname(file)) < 0
             list.push info if info.type is 'directory'
             cb null, list if queue == 0
+
+  row: (list, length) ->
+    rowed = []
+    while list.length > 0
+      rowed[rowed.length] = list.splice 0, length
+    return rowed
