@@ -1,11 +1,23 @@
 !!!
-body
-  each item in items
-    if item.type == 'image'
-      a(href="images/#{item.path}")
-        img(src="/thumbs/#{item.dir}/600/#{item.name}")
-    if item.type == 'directory'
-      a(href="/#{item.name}.html")
-        img(src="/assets/folder.png")
-        h4 #{item.name}
-    br
+html(lang='en')
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width initial-scale=1")
+    title Gallery
+
+    link(href="assets/css/bootstrap.min.css", rel="stylesheet")
+
+  body
+    each row in items
+      .row
+        each item in row
+          if item.type == 'image'
+            .col-md-3
+              a(href="images/#{item.path}")
+                img.img-responsive(src="/thumbs/#{item.dir}/600/#{item.name}")
+          if item.type == 'directory'
+            .col-md-3
+              a(href="/#{item.name}.html")
+                img.img-responsive(src="/assets/img/folder.png")
+                h4 #{item.name}

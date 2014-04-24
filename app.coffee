@@ -33,6 +33,7 @@ watcher.watch DIR
 
 #Build index page
 lister.build DIR, (err, list) ->
+  list = lister.row list, 4
   templates 'gallery', {locals: items: list}, (err, content) ->
     fs.writeFile "./public/index.html", content
 
@@ -48,6 +49,7 @@ thumbnail_file = (file) ->
     target_dir = path.dirname path.relative DIR, file
     lister.build "./public/images/#{target_dir}", (err, list) ->
       return console.error err if err?
+      list = lister.row list, 4
       templates 'gallery', {locals: items: list}, (err, content) ->
         fs.writeFile "./public/#{target_dir}.html", content
 
