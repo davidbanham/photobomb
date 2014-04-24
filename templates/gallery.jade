@@ -6,9 +6,9 @@ html(lang='en')
     meta(name="viewport", content="width=device-width initial-scale=1")
     title Gallery
 
-    link(href="assets/css/bootstrap.min.css", rel="stylesheet")
+    link(href="/assets/css/bootstrap.min.css", rel="stylesheet")
 
-  body
+  body(style="background: grey; background-image: url(/assets/img/black-textile-pattern.jpg);")
     each row in items
       .row
         each item in row
@@ -21,3 +21,4 @@ html(lang='en')
               a(href="/#{item.name}.html")
                 img.img-responsive(src="/assets/img/folder.png")
                 h4 #{item.name}
+      br
