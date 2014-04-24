@@ -24,6 +24,7 @@ mkdirp path.join(THUMBDIR, size.toString()) for size in SIZES
 (findit.find(path.resolve(DIR)))
   .on 'directory', (dir, stat) ->
     watcher.watch dir
+    build_gallery path.relative DIR, dir
   #Create a thumbnail for every file we find
   .on 'file', (file) ->
     thumbnail_file file
@@ -42,16 +43,19 @@ watcher.on 'created', (file) ->
   fs.stat file, (err, stats) ->
     watchDir file if stats.isDirectory()
   thumbnail_file file if EXTS.indexOf(path.extname(file)) > -1
+  build_gallery path.dirname path.relative DIR, file if EXTS.indexOf(path.extname(file)) > -1
 
 thumbnail_file = (file) ->
-  console.log 'thumbnailing', file
   thumbnailer.generate file, path.dirname(path.join(THUMBDIR, path.relative(DIR, file))), SIZES, (err) ->
-    target_dir = path.dirname path.relative DIR, file
-    lister.build "./public/images/#{target_dir}", (err, list) ->
-      return console.error err if err?
-      list = lister.row list, 4
-      templates 'gallery', {locals: items: list}, (err, content) ->
-        fs.writeFile "./public/#{target_dir}.html", content
+    console.log('err thumbnailing', file, err) if err?
+
+build_gallery = (target_dir) ->
+  lister.build "./public/images/#{target_dir}", (err, list) ->
+    return console.error err if err?
+    list = lister.row list, 4
+    templates 'gallery', {locals: items: list}, (err, content) ->
+      fs.writeFile "./public/#{target_dir}.html", content
+      console.log 'gallery written for', target_dir
 
 watcher.on 'deleted', (file) ->
   console.log "Deleted: ", file
