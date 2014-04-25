@@ -53,8 +53,9 @@ build_gallery = (target_dir) ->
     return console.error err if err?
     list = lister.row list, 4
     templates 'gallery', {locals: items: list}, (err, content) ->
-      fs.writeFile "./public/#{target_dir}.html", content
-      console.log 'gallery written for', target_dir
+      mkdirp "./public/#{target_dir}", (err) ->
+        fs.writeFile "./public/#{target_dir}/index.html", content
+        console.log 'gallery written for', target_dir
 
 watcher.on 'deleted', (file) ->
   console.log "Deleted: ", file
