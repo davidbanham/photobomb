@@ -12,9 +12,8 @@ router = require './lib/router.coffee'
 lister = require './lib/lister.coffee'
 
 DIR = './public/images'
-THUMBDIR = './thumbs'
+THUMBDIR = './public/thumbs'
 THUMBDIR = path.resolve THUMBDIR
-DIR = path.resolve DIR
 SIZES = [600, 1400]
 EXTS = ['.jpg', '.jpeg']
 
