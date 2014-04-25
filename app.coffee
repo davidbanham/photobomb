@@ -4,6 +4,7 @@ path = require 'path'
 findit = require 'findit'
 mkdirp = require 'mkdirp'
 findit = require 'findit'
+static_ = require 'node-static'
 templates = require './lib/templates.coffee'
 thumbnailer = require './lib/thumbnailer.coffee'
 watcher = require './lib/watcher.coffee'
@@ -57,3 +58,11 @@ build_gallery = (target_dir) ->
 
 watcher.on 'deleted', (file) ->
   console.log "Deleted: ", file
+
+file = new static_.Server("./public")
+
+require("http").createServer((request, response) ->
+  request.addListener("end", ->
+    file.serve request, response
+  ).resume()
+).listen process.env.PORT or 8080

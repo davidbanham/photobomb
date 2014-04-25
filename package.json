@@ -18,7 +18,8 @@
     "coffee-script": "~1.6.3",
     "level": "~0.18.0",
     "async": "~0.7.0",
-    "deep-equal": "~0.2.1"
+    "deep-equal": "~0.2.1",
+    "node-static": "~0.7.3"
   },
   "dev-dependencies": {
     "mocha": "~1.10.0"
