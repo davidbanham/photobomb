@@ -3,12 +3,10 @@ querystring = require 'querystring'
 path = require 'path'
 findit = require 'findit'
 mkdirp = require 'mkdirp'
-http = require 'http'
 findit = require 'findit'
 templates = require './lib/templates.coffee'
 thumbnailer = require './lib/thumbnailer.coffee'
 watcher = require './lib/watcher.coffee'
-router = require './lib/router.coffee'
 lister = require './lib/lister.coffee'
 
 DIR = './public/images'
@@ -59,11 +57,3 @@ build_gallery = (target_dir) ->
 
 watcher.on 'deleted', (file) ->
   console.log "Deleted: ", file
-
-server = http.createServer (req, res) ->
-  router.dispatch req, res, (err) ->
-    if err?
-      res.writeHead 404
-      res.end()
-
-server.listen 8080
