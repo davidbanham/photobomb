@@ -6,7 +6,8 @@ mkdirp = require 'mkdirp'
 findit = require 'findit'
 static_ = require 'node-static'
 templates = require './lib/templates.coffee'
-thumbnailer = require './lib/thumbnailer.coffee'
+thumb_stream = require './lib/thumb_stream.coffee'
+generator = thumb_stream.generate()
 watcher = require './lib/watcher.coffee'
 lister = require './lib/lister.coffee'
 
@@ -44,8 +45,10 @@ watcher.on 'created', (file) ->
   build_gallery path.dirname path.relative DIR, file if EXTS.indexOf(path.extname(file)) > -1
 
 thumbnail_file = (file) ->
-  thumbnailer.generate file, path.dirname(path.join(THUMBDIR, path.relative(DIR, file))), SIZES, (err) ->
-    console.log('err thumbnailing', file, err) if err?
+  generator.write
+    from: file
+    to: path.dirname(path.join(THUMBDIR, path.relative(DIR, file)))
+    sizes: SIZES
 
 build_gallery = (target_dir) ->
   lister.build "./public/images/#{target_dir}", (err, list) ->
