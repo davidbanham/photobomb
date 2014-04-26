@@ -25,7 +25,7 @@ mkdirp path.join(THUMBDIR, size.toString()) for size in SIZES
     build_gallery path.relative DIR, dir
   #Create a thumbnail for every file we find
   .on 'file', (file) ->
-    thumbnail_file file
+    thumbnail_file file if EXTS.indexOf(path.extname(file)) > -1
 
 #Also watch the top level dir
 watcher.watch DIR
