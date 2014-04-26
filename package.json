@@ -19,7 +19,8 @@
     "level": "~0.18.0",
     "async": "~0.7.0",
     "deep-equal": "~0.2.1",
-    "node-static": "~0.7.3"
+    "node-static": "~0.7.3",
+    "through2": "~0.4.1"
   },
   "dev-dependencies": {
     "mocha": "~1.10.0"
