@@ -9,6 +9,7 @@ module.exports =
       queue = files.length
       dir = (parent.split(path.sep).splice 3).join path.sep
       for file in files
+        continue if file.charAt(0) is '.'
         do (file) ->
           fs.stat path.join(parent, file), (err, stats) ->
             queue--

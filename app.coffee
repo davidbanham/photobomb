@@ -22,10 +22,12 @@ mkdirp path.join(THUMBDIR, size.toString()) for size in SIZES
 #Watch all subdirectories of the main dir
 (findit.find(path.resolve(DIR)))
   .on 'directory', (dir, stat) ->
+    return if dir.charAt(0) is '.'
     watcher.watch dir
     build_gallery path.relative DIR, dir
   #Create a thumbnail for every file we find
   .on 'file', (file) ->
+    return if file.charAt(0) is '.'
     thumbnail_file file if EXTS.indexOf(path.extname(file)) > -1
 
 #Also watch the top level dir
@@ -38,6 +40,7 @@ lister.build DIR, (err, list) ->
     fs.writeFile "./public/index.html", content
 
 watcher.on 'created', (file) ->
+  return if file.charAt(0) is '.'
   console.log "Created: ", file
   fs.stat file, (err, stats) ->
     watchDir file if stats.isDirectory()
