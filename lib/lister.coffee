@@ -22,7 +22,7 @@ module.exports =
             info.type = 'directory' if stats.isDirectory()
             info.type = 'image' if stats.isFile()
             if info.type is 'image'
-              list.push info unless EXTS.indexOf(path.extname(file)) < 0
+              list.push info unless EXTS.indexOf(path.extname(file).toLowerCase()) < 0
             list.push info if info.type is 'directory'
             cb null, list if queue == 0
 
