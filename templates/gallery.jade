@@ -7,6 +7,9 @@ html(lang='en')
     title Gallery
 
     link(href="/assets/css/bootstrap.min.css", rel="stylesheet")
+    link(href="/assets/css/lightbox.css", rel="stylesheet")
+    script(src="/assets/js/jquery-1.11.0.min.js")
+    script(src="/assets/js/lightbox.min.js")
 
   body(style="background: grey; background-image: url(/assets/img/black-textile-pattern.jpg);")
     each row in items
@@ -14,7 +17,7 @@ html(lang='en')
         each item in row
           if item.type == 'image'
             .col-md-3
-              a(href="/images/#{item.path}")
+              a(href="/thumbs/#{item.dir}/1400/#{item.name}", data-lightbox=item.name, data-title='<a href="/images/#{item.path}">Full size image</a>')
                 img.img-responsive(src="/thumbs/#{item.dir}/600/#{item.name}")
           if item.type == 'directory'
             .col-md-3
