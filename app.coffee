@@ -28,7 +28,7 @@ mkdirp path.join(THUMBDIR, size.toString()) for size in SIZES
   #Create a thumbnail for every file we find
   .on 'file', (file) ->
     return if file.charAt(0) is '.'
-    thumbnail_file file if EXTS.indexOf(path.extname(file)) > -1
+    thumbnail_file file if EXTS.indexOf(path.extname(file).toLowerCase()) > -1
 
 #Also watch the top level dir
 watcher.watch DIR
@@ -44,8 +44,8 @@ watcher.on 'created', (file) ->
   console.log "Created: ", file
   fs.stat file, (err, stats) ->
     watchDir file if stats.isDirectory()
-  thumbnail_file file if EXTS.indexOf(path.extname(file)) > -1
-  build_gallery path.dirname path.relative DIR, file if EXTS.indexOf(path.extname(file)) > -1
+  thumbnail_file file if EXTS.indexOf(path.extname(file).toLowerCase()) > -1
+  build_gallery path.dirname path.relative DIR, file if EXTS.indexOf(path.extname(file).toLowerCase()) > -1
 
 thumbnail_file = (file) ->
   generator.write
