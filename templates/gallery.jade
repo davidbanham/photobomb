@@ -38,6 +38,6 @@ html(lang='en')
           if item.type == 'directory'
             .col-md-3
               a(href="/#{item.path}/")
-                img.img-responsive(src="/assets/img/folder.png")
+                img.img-responsive(src="/thumbs/#{item.dir}/#{item.name}/600/#{item.title_card}")
                 h4(style="margin-left: 20px") #{item.name}
       br
