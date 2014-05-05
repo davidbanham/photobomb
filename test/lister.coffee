@@ -9,6 +9,7 @@ describe 'lister', ->
     fs.mkdirSync './list_test/sub'
     fs.writeFileSync './list_test/one.jpg'
     fs.writeFileSync './list_test/two.jpg'
+    fs.writeFileSync './list_test/sub/title.jpg'
 
   after ->
     exec 'rm -rf ./list_test'
@@ -25,18 +26,20 @@ describe 'lister', ->
             type: 'image'
           }
           {
-            name: 'sub'
-            dir: ''
-            path: 'sub'
-            type: 'directory'
-          }
-          {
             name: 'two.jpg'
             dir: ''
             path: 'two.jpg'
             type: 'image'
           }
+          {
+            name: 'sub'
+            dir: ''
+            path: 'sub'
+            type: 'directory'
+            title_card: 'title.jpg'
+          }
         ]
+      assert.equal list.length, expected.length
       assert.deepEqual list, expected
       done()
 

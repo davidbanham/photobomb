@@ -6,15 +6,14 @@ module.exports =
   build: (parent, cb) ->
     list = []
     fs.readdir parent, (err, files) ->
+      files = files.map (file) ->
+        return if file.charAt(0) is '.'
+        return file
       queue = files.length
       dir = (parent.split(path.sep).splice 3).join path.sep
       for file in files
-        if file.charAt(0) is '.'
-          queue--
-          continue
         do (file) ->
           fs.stat path.join(parent, file), (err, stats) ->
-            queue--
             info =
               name: file
               dir: dir
@@ -22,9 +21,18 @@ module.exports =
             info.type = 'directory' if stats.isDirectory()
             info.type = 'image' if stats.isFile()
             if info.type is 'image'
+              queue--
               list.push info unless EXTS.indexOf(path.extname(file).toLowerCase()) < 0
-            list.push info if info.type is 'directory'
-            cb null, list if queue == 0
+              cb null, list if queue is 0
+            else
+              fs.readdir path.join(parent, info.path), (err, files) ->
+                queue--
+                info.title_card = files.map((file) ->
+                  return if file.charAt(0) is '.'
+                  return file
+                )[0]
+                list.push info
+                cb null, list if queue is 0
 
   row: (list, length) ->
     rowed = []
