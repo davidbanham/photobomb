@@ -7,6 +7,7 @@ describe 'lister', ->
   before ->
     fs.mkdirSync './list_test'
     fs.mkdirSync './list_test/sub'
+    fs.mkdirSync './list_test/wat'
     fs.writeFileSync './list_test/one.jpg'
     fs.writeFileSync './list_test/two.jpg'
     fs.writeFileSync './list_test/sub/.a'

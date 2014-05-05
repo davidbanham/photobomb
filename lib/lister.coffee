@@ -27,6 +27,9 @@ module.exports =
             else
               fs.readdir path.join(parent, info.path), (err, files) ->
                 queue--
+                if files.length is 0
+                  cb null, list if queue is 0
+                  return
                 info.title_card = files.filter((file) ->
                   return false if file.charAt(0) is '.'
                   return true
