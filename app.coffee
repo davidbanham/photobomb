@@ -15,6 +15,7 @@ DIR = './public/images'
 THUMBDIR = './public/thumbs'
 THUMBDIR = path.resolve THUMBDIR
 SIZES = [600, 1400]
+FACEBOOK_APPID = process.env.FACEBOOK_APPID
 EXTS = ['.jpg', '.jpeg']
 
 mkdirp path.join(THUMBDIR, size.toString()) for size in SIZES
@@ -36,7 +37,7 @@ watcher.watch DIR
 #Build index page
 lister.build DIR, (err, list) ->
   list = lister.row list, 4
-  templates 'gallery', {locals: items: list}, (err, content) ->
+  templates 'gallery', {locals: items: list, facebook_appid: FACEBOOK_APPID}, (err, content) ->
     fs.writeFile "./public/index.html", content
 
 watcher.on 'created', (file) ->
@@ -57,7 +58,7 @@ build_gallery = (target_dir) ->
   lister.build "./public/images/#{target_dir}", (err, list) ->
     return console.error err if err?
     list = lister.row list, 4
-    templates 'gallery', {locals: items: list}, (err, content) ->
+    templates 'gallery', {locals: items: list, facebook_appid: FACEBOOK_APPID}, (err, content) ->
       mkdirp "./public/#{target_dir}", (err) ->
         fs.writeFile "./public/#{target_dir}/index.html", content
         console.log 'gallery written for', target_dir
