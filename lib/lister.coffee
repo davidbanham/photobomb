@@ -6,9 +6,9 @@ module.exports =
   build: (parent, cb) ->
     list = []
     fs.readdir parent, (err, files) ->
-      files = files.map (file) ->
-        return if file.charAt(0) is '.'
-        return file
+      files = files.filter (file) ->
+        return false if file.charAt(0) is '.'
+        return true
       queue = files.length
       dir = (parent.split(path.sep).splice 3).join path.sep
       for file in files
@@ -27,9 +27,9 @@ module.exports =
             else
               fs.readdir path.join(parent, info.path), (err, files) ->
                 queue--
-                info.title_card = files.map((file) ->
-                  return if file.charAt(0) is '.'
-                  return file
+                info.title_card = files.filter((file) ->
+                  return false if file.charAt(0) is '.'
+                  return true
                 )[0]
                 list.push info
                 cb null, list if queue is 0

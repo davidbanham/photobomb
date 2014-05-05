@@ -9,6 +9,7 @@ describe 'lister', ->
     fs.mkdirSync './list_test/sub'
     fs.writeFileSync './list_test/one.jpg'
     fs.writeFileSync './list_test/two.jpg'
+    fs.writeFileSync './list_test/sub/.a'
     fs.writeFileSync './list_test/sub/title.jpg'
 
   after ->
