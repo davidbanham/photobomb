@@ -58,7 +58,7 @@ build_gallery = (target_dir) ->
   lister.build "./public/images/#{target_dir}", (err, list) ->
     return console.error err if err?
     list = lister.row list, 4
-    templates 'gallery', {locals: items: list, facebook_appid: FACEBOOK_APPID}, (err, content) ->
+    templates 'gallery', {locals: title: target_dir, items: list, facebook_appid: FACEBOOK_APPID}, (err, content) ->
       mkdirp "./public/#{target_dir}", (err) ->
         fs.writeFile "./public/#{target_dir}/index.html", content
         console.log 'gallery written for', target_dir
