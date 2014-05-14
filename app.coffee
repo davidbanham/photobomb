@@ -24,6 +24,7 @@ mkdirp path.join(THUMBDIR, size.toString()) for size in SIZES
 (findit.find(path.resolve(DIR)))
   .on 'directory', (dir, stat) ->
     return if dir.charAt(0) is '.'
+    return if dir.indexOf('SyncArchive') is > -1
     watcher.watch dir
     build_gallery path.relative DIR, dir
   #Create a thumbnail for every file we find
