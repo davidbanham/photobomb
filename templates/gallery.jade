@@ -35,7 +35,6 @@ html(lang='en')
           if item.type == 'image'
             .col-md-3
               a(href="/thumbs/#{item.dir}/1400/#{item.name}", data-lightbox=item.name, data-title='<a href="/images/#{item.path}">Full size image</a>')
-                span.helper
                 img.thumb.img-responsive(src="/thumbs/#{item.dir}/600/#{item.name}")
           if item.type == 'directory'
             .col-md-3
