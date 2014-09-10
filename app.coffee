@@ -43,6 +43,7 @@ lister.build DIR, (err, list) ->
 
 watcher.on 'created', (file) ->
   return if file.charAt(0) is '.'
+  return if file.substring(file.lastIndexOf('.')+1) is '!sync'
   console.log "Created: ", file
   fs.stat file, (err, stats) ->
     watchDir file if stats.isDirectory()
