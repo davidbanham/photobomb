@@ -3,3 +3,10 @@
   height: 100%;
   vertical-align: middle;
 }
+
+.thumb {
+  max-height: 275px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 10px;
+}

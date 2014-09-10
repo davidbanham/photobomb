@@ -36,10 +36,10 @@ html(lang='en')
             .col-md-3
               a(href="/thumbs/#{item.dir}/1400/#{item.name}", data-lightbox=item.name, data-title='<a href="/images/#{item.path}">Full size image</a>')
                 span.helper
-                img.img-responsive(src="/thumbs/#{item.dir}/600/#{item.name}")
+                img.thumb.img-responsive(src="/thumbs/#{item.dir}/600/#{item.name}")
           if item.type == 'directory'
             .col-md-3
               a(href="/#{item.path}/")
-                img.img-responsive(src="/thumbs/#{item.dir}/#{item.name}/600/#{item.title_card}")
+                img.thumb.img-responsive(src="/thumbs/#{item.dir}/#{item.name}/600/#{item.title_card}")
                 h4(style="margin-left: 20px") #{item.name}
       br
