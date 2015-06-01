@@ -1,9 +1,8 @@
 fs = require 'fs'
 querystring = require 'querystring'
 path = require 'path'
-findit = require 'findit'
+walk = require 'walkdir'
 mkdirp = require 'mkdirp'
-findit = require 'findit'
 static_ = require 'node-static'
 templates = require './lib/templates.coffee'
 thumb_stream = require './lib/thumb_stream.coffee'
@@ -21,7 +20,7 @@ EXTS = ['.jpg', '.jpeg']
 mkdirp path.join(THUMBDIR, size.toString()) for size in SIZES
 
 #Watch all subdirectories of the main dir
-(findit.find(path.resolve(DIR)))
+(walk(path.resolve(DIR)))
   .on 'directory', (dir, stat) ->
     return if dir.charAt(0) is '.'
     return if dir.indexOf('SyncArchive') > -1
