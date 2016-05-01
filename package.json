@@ -22,10 +22,8 @@
     "through2": "~0.4.1",
     "walkdir": "0.0.9"
   },
-  "dev-dependencies": {
-    "mocha": "~1.10.0"
-  },
   "devDependencies": {
-    "rimraf": "~2.2.6"
+    "rimraf": "~2.2.6",
+    "mocha": "~1.10.0"
   }
 }
