@@ -1,9 +1,7 @@
-FROM mhart/alpine-node:4
+FROM node:4
 
-RUN apk add --update \
-    python \
-    python-dev \
-    build-base
+RUN apt-get update
+RUN apt-get install -y graphicsmagick
 
 WORKDIR /opt/app
 
