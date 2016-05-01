@@ -26,11 +26,11 @@ module.exports =
 
       for size in SIZES
         queue.push {file: filename, size: size, to: to, from: from}, (err) ->
-          throw err if err?
+          console.error err if err?
 
       queue.drain = =>
         @cache from, SIZES, (err) ->
-          throw err if err?
+          console.error err if err?
           cb null
 
   thumbnail: (input, cb) ->
