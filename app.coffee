@@ -45,6 +45,8 @@ watcher.on 'created', (file) ->
   return if file.substring(file.lastIndexOf('.')+1) is '!sync'
   console.log "Created: ", file
   fs.stat file, (err, stats) ->
+    console.error err if err
+    return if !stats
     watchDir file if stats.isDirectory()
   thumbnail_file file if EXTS.indexOf(path.extname(file).toLowerCase()) > -1
   build_gallery path.dirname path.relative DIR, file if EXTS.indexOf(path.extname(file).toLowerCase()) > -1
